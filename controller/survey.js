@@ -1,5 +1,6 @@
 const {Survey,QuestionSchema} = require("../models/survey")
 
+
 exports.getSurveyById = (req, res, next, id) => {
     Survey.findById(id).exec((err, survey) => {
       if (err) {
@@ -27,7 +28,8 @@ exports.createSurvey = (req,res) => {
 }
 
 exports.getAllSurvey = (req,res) => {
-    Survey.find().exec((err, survey) => {
+    const category = req.category
+    Survey.find({"survey_category":category}).exec((err, survey) => {
         if (err) {
           return res.status(400).json({
             error: "No Survey Found"

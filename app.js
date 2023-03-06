@@ -9,6 +9,7 @@ const authRoutes = require("./routes/auth")
 const userRoutes = require("./routes/user")
 const surveyRoutes = require("./routes/survey")
 const categoryRoutes = require("./routes/category");
+const responseRoutes= require("./routes/response")
 
 
 const app = express();
@@ -36,6 +37,7 @@ app.use("/api",authRoutes)
 app.use("/api",userRoutes)
 app.use("/api",surveyRoutes)
 app.use("/api",categoryRoutes)
+app.use("/api",responseRoutes)
 
 
 
