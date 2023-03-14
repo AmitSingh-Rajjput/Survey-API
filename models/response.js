@@ -2,19 +2,15 @@ const mongoose = require("mongoose")
 const { ObjectId } = mongoose.Schema;
 const {Survey,QuestionSchema} = require("../models/survey")
 
-const response = new mongoose.Schema({
-    questions:{
-        type: ObjectId,
-        ref: "QuestionSchema",
-        required: true
-    },
-    que_response: {
-        type:String,
-        required:true
-    }
-},{timestamp:true})
+// const response = new mongoose.Schema({
+//     questions:[QuestionSchema],
+//     que_response: {
+//         type:String,
+//         required:true
+//     }
+// },{timestamp:true})
 
-const ResponseSchema = mongoose.model("ResponseSchema", response);
+// const ResponseSchema = mongoose.model("ResponseSchema", response);
 
 const responsesSchema = new mongoose.Schema({
     user_Id: {
@@ -27,9 +23,14 @@ const responsesSchema = new mongoose.Schema({
         ref: "Survey",
         required: true
     },
-    resposes:[response],
+    questions:[{ type: mongoose.Types.ObjectId, ref: "QuestionSchema" }],
+    resposes:{
+        type:Array,
+        required:true,
+        default:[]
+    },
 },{timestamp:true});
 
 const ResponsesSchema = mongoose.model("ResponsesSchema", responsesSchema);
 
-module.exports = { ResponseSchema, ResponsesSchema };
+module.exports = { ResponsesSchema };

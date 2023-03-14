@@ -13,6 +13,10 @@ exports.getSurveyById = (req, res, next, id) => {
     });
   };
 
+  exports.getSurvey = (req, res) => {
+    return res.json(req.survey);
+  };
+
 exports.createSurvey = (req,res) => {
     const survey = new Survey(req.body)
     survey.save((err,survey) => {

@@ -1,4 +1,5 @@
 const User = require("../models/user")
+const { ResponseSchema, ResponsesSchema } = require("../models/response")
 
 exports.getUserById = (req, res, next, id) => {
     User.findById(id).exec((err, user) => {
@@ -46,3 +47,46 @@ exports.getUserById = (req, res, next, id) => {
         }
     )
   }
+
+  exports.userSurveyList = (req, res) => {
+    ResponsesSchema.find({ user_Id: req.profile._id })
+      .populate("survey_Id","_id survey_name survey_category")
+      .exec((err, surveys) => {
+        if (err) {
+          return res.status(400).json({
+            error: "No Surveys in this account"
+          });
+        }
+        return res.json(surveys);
+      });
+  };
+
+  exports.pushSurveyInResponseList = (req, res, next) => {
+    // req.body.products.forEach(product => {
+    //   purchases.push({
+    //     _id: product._id,
+    //     name: product.name,
+    //     description: product.description,
+    //     category: product.category,
+    //     quantity: product.quantity,
+    //     amount: req.body.order.amount,
+    //     transaction_id: req.body.order.transaction_id
+    //   });
+    // });
+  
+    //store thi in DB
+    User.findOneAndUpdate(
+      { _id: req.profile._id },
+      { $push: { completedSurvey: req.body.survey_Id } },
+      { new: true },
+      (err, survey) => {
+        if (err) {
+          return res.status(400).json({
+            error: "Unable to save survey list"
+          });
+        }
+        next();
+      }
+    );
+  };
+  
