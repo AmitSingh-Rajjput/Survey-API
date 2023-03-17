@@ -24,7 +24,22 @@ var userSchema = new mongoose.Schema({
         type:String,
         trim:true
     },
-
+    totalNumberExperience:{
+        type:Number,
+        trim:true
+    },
+    post:{
+        type:String,
+        trim:true
+    },
+    city:{
+        type:String,
+        trim:true
+    },
+    gender:{
+        type:String,
+        trim:true
+    },
     encry_password: {
        type:String,
        required:true
